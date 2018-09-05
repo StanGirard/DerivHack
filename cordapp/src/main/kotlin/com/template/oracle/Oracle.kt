@@ -28,6 +28,7 @@ class Oracle(val services: ServiceHub) : SingletonSerializeAsToken() {
 
     /** Returns spot for a given stock. */
     fun queryValue(): Int {
+        print("I am return a valuuuuueeee !")
         return VALUE
     }
 
@@ -43,6 +44,7 @@ class Oracle(val services: ServiceHub) : SingletonSerializeAsToken() {
     fun sign(ftx: FilteredTransaction): TransactionSignature {
         // Is the partial Merkle tree valid?
         ftx.verify()
+        print("I am signing this beautiful transaction")
 
         /** Returns true if the component is an OracleCommand that:
          *  - States the correct price and volatility

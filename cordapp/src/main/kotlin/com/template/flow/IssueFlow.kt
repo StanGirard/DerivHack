@@ -16,7 +16,6 @@ import java.time.Duration
 import java.time.Instant
 import java.util.function.Predicate
 
-object OptionIssueFlow {
 
     /**
      * Purchases an option from the issuer, using the oracle to determine the correct price given the current spot
@@ -27,7 +26,7 @@ object OptionIssueFlow {
      */
     @InitiatingFlow
     @StartableByRPC
-    class Initiator(private val instrumentState: InstrumentState) : FlowLogic<SignedTransaction>() {
+    class InstrumentIssueFlow(private val instrumentState: InstrumentState) : FlowLogic<SignedTransaction>() {
 
         companion object {
             object SET_UP : ProgressTracker.Step("Initialising flow.")
@@ -105,8 +104,8 @@ object OptionIssueFlow {
     }
 
     @InitiatingFlow
-    @InitiatedBy(Initiator::class)
-    class Responder(val counterpartySession: FlowSession) : FlowLogic<SignedTransaction>() {
+    @InitiatedBy(InstrumentIssueFlow::class)
+    class InstrumentResponderFlow(val counterpartySession: FlowSession) : FlowLogic<SignedTransaction>() {
         @Suspendable
         override fun call(): SignedTransaction {
             val flow = object : SignTransactionFlow(counterpartySession) {
@@ -123,4 +122,3 @@ object OptionIssueFlow {
             return waitForLedgerCommit(stx.id)
         }
     }
-}

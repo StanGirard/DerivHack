@@ -6,8 +6,6 @@ import net.corda.core.flows.InitiatingFlow
 import net.corda.core.identity.Party
 import net.corda.core.utilities.unwrap
 
-import java.time.Instant
-
 /** Called by the client to request a stock's spot price and volatility at a point in time from an oracle. */
 @InitiatingFlow
 class QueryOracle(private val oracle: Party) : FlowLogic<Int>() {

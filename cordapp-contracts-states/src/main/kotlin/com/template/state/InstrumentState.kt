@@ -1,11 +1,8 @@
 package com.template.state
 
-import net.corda.core.contracts.Amount
 import net.corda.core.contracts.LinearState
 import net.corda.core.contracts.UniqueIdentifier
 import net.corda.core.identity.Party
-import java.time.Instant
-import java.util.*
 
 /**
  * Models an (American) option contract.

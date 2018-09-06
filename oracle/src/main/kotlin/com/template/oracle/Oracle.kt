@@ -7,6 +7,10 @@ import net.corda.core.node.ServiceHub
 import net.corda.core.node.services.CordaService
 import net.corda.core.serialization.SingletonSerializeAsToken
 import net.corda.core.transactions.FilteredTransaction
+import khttp.delete as httpDelete
+import org.postgresql.core.ConnectionFactory.openConnection
+
+
 
 /**
  *  We sub-class 'SingletonSerializeAsToken' to ensure that instances of this class are never serialised by Kryo. When
@@ -26,9 +30,20 @@ class Oracle(val services: ServiceHub) : SingletonSerializeAsToken() {
 
     private val VALUE = 42
 
+    fun fetchPrice(): Int {
+        Fuel.get("https://api.coinmarketcap.com/v2/ticker/1/").response { request, response, result ->
+            print(request)
+            print(response)
+            val (bytes, error) = result
+            if (bytes != null) {
+                println(bytes)
+            }
+        }
+    }
     /** Returns spot for a given stock. */
     fun queryValue(): Int {
         print("I am return a valuuuuueeee !")
+        fetchPrice()
         return VALUE
     }
 
@@ -54,7 +69,7 @@ class Oracle(val services: ServiceHub) : SingletonSerializeAsToken() {
             elem is Command<*> && elem.value is InstrumentContract.OracleCommand -> {
                 val cmdData = elem.value as InstrumentContract.OracleCommand
                 myKey in elem.signers
-                        && VALUE == cmdData.value
+                        && queryValue() == cmdData.value
             }
             else -> false
         }

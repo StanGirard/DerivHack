@@ -1,0 +1,19 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "jsonReader.js",
+  "scripts": {
+    "start": "babel-node start.js --presets es2015",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "fs": "0.0.1-security",
+    "jquery": "^3.3.1",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
